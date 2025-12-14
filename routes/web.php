@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\controller1;
+use App\Http\Controllers\bukucontrol;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -12,3 +13,4 @@ Route::get('/', function () {
 });
 
 Route::get('/controller1', [controller1::class, 'index']);
+Route::get('/buku', [bukucontrol::class, 'index']);
