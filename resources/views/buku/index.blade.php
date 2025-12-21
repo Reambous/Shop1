@@ -55,11 +55,17 @@
                             <td>{{ $item->tahun_terbit }}</td>
                             <td class="action-buttons">
                                 <button class="btn btn-sm btn-warning">
-                                    <i class="fas fa-edit"></i> Edit
+                                    <a href="{{ route('buku.edit', $item->id) }}">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
                                 </button>
-                                <button class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash-alt"></i> Hapus
-                                </button>
+                                <form action="{{ route('buku.delete', $item->id) }}" method="post" class="d-inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -86,21 +92,27 @@
         @endif
         <!-- Form Tambah Data (opsional) -->
         <div class="mt-4 p-3 bg-light rounded">
-            <h3>Tambah Buku Baru</h3>
-            <form action=" {{ route('buku.store') }}" method="post">
+            <h3>{{ isset($bukudetail) ? 'Edit Buku' : 'Tambah Buku' }}</h3>
+            <form action=" {{ isset($bukudetail) ? route('buku.update', $bukudetail->id) : route('buku.store') }}"
+                method="post">
                 @csrf
+                @if (isset($bukudetail))
+                    @method('put')
+                @endif
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul Buku</label>
-                    <input type="text" class="form-control" id="judul" name="judul" required>
+                    <input type="text" class="form-control" id="judul" name="judul"
+                        value="{{ old('judul') }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="pengarang" class="form-label">Pengarang</label>
-                    <input type="text" class="form-control" id="pengarang" name="pengarang" required>
+                    <input type="text" class="form-control" id="pengarang" name="pengarang"
+                        value="{{ old('pengarang') }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="tahun_terbit" class="form-label">Tahun Terbit</label>
                     <input type="number" class="form-control" id="tahun_terbit" name="tahun_terbit" min="1900"
-                        max="2099" required>
+                        max="2099" value="{{ old('tahun_terbit') }}"required>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>

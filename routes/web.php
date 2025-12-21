@@ -15,3 +15,6 @@ Route::get('/', function () {
 Route::get('/controller1', [controller1::class, 'index']);
 Route::get('/buku', [bukucontrol::class, 'index'])->name('buku.index');
 Route::post('/buku', [bukucontrol::class, 'store'])->name('buku.store');
+Route::get('/buku/{id}/edit', [bukucontrol::class, 'edit'])->name('buku.edit');
+Route::put('/buku/{id}', [bukucontrol::class, 'update'])->name('buku.update');
+Route::delete('/buku/{id}/delete', [bukucontrol::class, 'destroy'])->name('buku.delete');
