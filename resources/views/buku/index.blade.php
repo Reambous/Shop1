@@ -47,46 +47,48 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Data Buku 1 -->
-                    <tr>
-                        <td>1</td>
-                        <td>Pemrograman JavaScript Modern</td>
-                        <td>Joko Santoso</td>
-                        <td>2022</td>
-                        <td class="action-buttons">
-                            <button class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash-alt"></i> Hapus
-                            </button>
-                        </td>
-                    </tr>
+                    @foreach ($buku as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->judul }}</td>
+                            <td>{{ $item->pengarang }}</td>
+                            <td>{{ $item->tahun_terbit }}</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash-alt"></i> Hapus
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
 
-                    <!-- Data Buku 2 -->
-                    <tr>
-                        <td>2</td>
-                        <td>Belajar Laravel untuk Pemula</td>
-                        <td>Budi Santoso</td>
-                        <td>2021</td>
-                        <td class="action-buttons">
-                            <button class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash-alt"></i> Hapus
-                            </button>
-                        </td>
-                    </tr>
 
                 </tbody>
             </table>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger mt-3">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+        @endif
         <!-- Form Tambah Data (opsional) -->
         <div class="mt-4 p-3 bg-light rounded">
             <h3>Tambah Buku Baru</h3>
-            <form action="" method="post">
+            <form action=" {{ route('buku.store') }}" method="post">
+                @csrf
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul Buku</label>
                     <input type="text" class="form-control" id="judul" name="judul" required>

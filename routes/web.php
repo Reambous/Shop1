@@ -13,4 +13,5 @@ Route::get('/', function () {
 });
 
 Route::get('/controller1', [controller1::class, 'index']);
-Route::get('/buku', [bukucontrol::class, 'index']);
+Route::get('/buku', [bukucontrol::class, 'index'])->name('buku.index');
+Route::post('/buku', [bukucontrol::class, 'store'])->name('buku.store');

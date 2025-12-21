@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\buku;
 use Illuminate\Http\Request;
 
 class bukucontrol extends Controller
@@ -11,7 +12,8 @@ class bukucontrol extends Controller
      */
     public function index()
     {
-        return view('buku.index');
+        $buku = buku::all();
+        return view('buku.index', compact('buku'));
     }
 
     /**
@@ -27,7 +29,13 @@ class bukucontrol extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'judul' => 'required|min:3',
+            'pengarang' => 'required|min:3',
+            'tahun_terbit' => 'required',
+        ]);
+        buku::create($validated);
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil ditambahkan.');
     }
 
     /**
